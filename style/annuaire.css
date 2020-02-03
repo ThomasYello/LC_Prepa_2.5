@@ -1,0 +1,246 @@
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent
+}
+body{
+    line-height:1;
+    font-family: arial;
+}
+h1{
+    color: black;
+    font-size: 25px;
+}
+h2{
+    font-size: 21px;
+}
+h3{
+    font-size: 18px;
+}
+h4{
+    font-size: 16px;
+}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{
+    display:block
+}
+nav ul{
+    list-style:none
+}
+blockquote,q{
+    quotes:none
+}
+blockquote:before,blockquote:after,q:before,q:after{
+    content:none
+}
+a{
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent
+}
+ins{
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none}
+mark{
+    background-color:#ff9;
+    color:#000;
+    font-style:italic;
+    font-weight:bold
+}
+del{
+    text-decoration:line-through
+}
+abbr[title],dfn[title]{
+    border-bottom:1px dotted;
+    cursor:help;
+}
+table{
+    border-collapse:collapse;
+    border-spacing:0;
+}
+hr{
+    display:block;
+    height:1px;
+    border:0;
+    border-top:1px solid #ccc;
+    margin:1em 0;
+    padding:0
+}
+
+body {
+	background-image: url("../img/paper.jpg");
+}
+
+section
+{
+background-color:#E7E8E8;
+}
+header {
+    background: url(../img/header.jpg);
+    padding: 1em 1.25em;
+    
+    max-width: 960px;
+    margin: auto;
+}
+.container
+{
+    max-width: 50em;
+    margin: 0 auto;
+    background-color: white;
+}
+.page a
+{
+color:black;
+text-decoration:none;
+font-size:130%;
+
+}
+.float{
+
+margin-left: 850px;
+margin-right: 50px;
+
+}
+
+nav {
+    display: inline-block;
+}
+nav ul li a {
+    background: #EEE;
+    padding: 2px 10px;
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #444;
+    border-radius: 10px;
+}
+nav ul li a:hover {
+	background: #FFF;
+}
+nav ul li {
+    display: inline-block;
+    margin: 10px;
+}
+nav ul {
+    list-style: none;
+}
+
+#pageContent {
+    max-width: 1000px;
+    margin: auto;
+    border: none;
+}
+
+main {
+	float: left;
+	width: 60%;
+}
+aside {
+	float: right;
+	width: 30%;
+}
+article {
+    border-bottom: 2px dotted #999;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+article h2 {
+    font-weight: normal;
+    margin-bottom: 12px;
+}
+
+#logo {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 30px;
+    margin-right: 75px;
+    color: #FFF;
+}
+#logo img {
+    width: 200px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+table{
+    width:100%;
+    background: url(../img/header.jpg);
+    border-collapse:collapse;
+    table-layout:auto;
+    vertical-align:top;
+    margin-bottom:15px;
+    border:1px solid #CCCCCC;
+}
+
+table thead th{
+    color:#FFFFFF;
+    background-color:#666666;
+    border:1px solid #CCCCCC;
+    border-collapse:collapse;
+    text-align:center;
+    table-layout:auto;
+    vertical-align:middle;
+}
+table thead th, table tbody td{
+    padding:6px;
+    border-collapse:collapse;
+}
+table tbody td{vertical-align:middle;
+    border-collapse:collapse;
+    border-left:1px solid #CCCCCC;
+    border-right:1px solid #CCCCCC;
+}
+table tbody tr:nth-child(odd){
+    color:#666666;
+    background-color:#F7F7F7;
+}
+table tbody tr:nth-child(even){
+    color:#666666;
+    background-color:#E8E8E8;
+}
+
+.table_annuaire{
+    display: inline-block;
+    text-align: center;
+    width:320px;
+}
+.table_annuaire input[type="text"] {
+    width:200px;
+}
+
+.table_annuaire input[name="num_prod"]{
+    width:20px;
+}
+
+.table_client{
+    display: inline-block;
+    text-align: center;
+    width:200px;
+}
+
+footer {
+    background: url(../img/header.jpg);
+    color: white;
+	max-width: 1000px;
+	margin: auto;
+	clear: both;
+	text-align: center;
+}
+footer p {
+	padding: 20px;
+}
+
+.ad{
+    color: black;
+}
+
+h3{
+
+    color: black;
+}
+
