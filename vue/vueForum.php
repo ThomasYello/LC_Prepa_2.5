@@ -1,4 +1,19 @@
+<?php
 
+if (!empty($_SESSION['userId']) ) {
+
+  $afficherNom = $_SESSION['userId'][0][3];
+
+} else{
+
+  $afficherNom = $_SESSION['user'][0][1];
+
+}
+
+
+
+
+?>
 <section id="pageContent">
     <article>
         <br><h1> Forum </h1>

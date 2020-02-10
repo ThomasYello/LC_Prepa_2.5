@@ -8,14 +8,17 @@
 
       if (isset($_REQUEST['action']) || !empty($_REQUEST['action'])) 
       {
-        include "./vue/vueHeader.php";
-
-        include "./vue/vueMenu.php";
+        session_start();
+        require "./vue/vueHeader.php";
         require "./controleur/controleur.php";
+        require "./vue/vueMenu.php";
         $employe = new Employes();
         $prod = new Produit();
         $comment = new Forum();
         
+
+
+       
 
         if ($_REQUEST['action'] == 'Supprimer') {
           
@@ -40,6 +43,8 @@
         } 
 
         if ($_REQUEST['action'] == 'Rechercher') {
+          $recherche = 1;
+
           $tblprod = $prod->Search($_POST);
           include "./vue/vueArticles.php";
         }
@@ -49,40 +54,46 @@
           //include "./vue/vueArticles.php";
         //}
 
-        if($_REQUEST['action'] == '+'){
-          session_start();
+        if($_REQUEST['action'] == 'Ajouter au panier'){
           
-        $tblprod = $prod->prodpanier($_POST);
+          
+        $tblpanier = $prod->panier($_POST);
+        
           include "vue/vuePanier.php";
         }
+
 
         if ($_REQUEST['action'] == 'Inserer'){
           $prod->setProd($_POST);
         }
 
-        if ($_GET['action'] == 'Admin') {
+        if ($_GET['action'] == 'panier') {
           
-          session_start();
+          include "./vue/vuePanier.php";
+        }
+
+
+        if ($_GET['action'] == 'formLog') {
+          
+          
 
         if (!empty($_SESSION['userId'])) {
 
-          $employe = new Employes();
           $tblEmp = $employe->getSelect();
           
           include "./vue/vueDashboard.php"; 
           
-          }else {
+          }
+          else {
 
             include "./vue/vueLogin.php";         
 
           }
-        
 
-        
       }
 
       if ($_GET['action'] == 'comment'){
-        session_start();
+       
     if (!empty($_SESSION["userId"])) {
 
         require_once "./controleur/membre.php";
@@ -102,43 +113,35 @@
        
     }else{
       
-      echo "
-      <center>
-      <article class='table_annuaire'> 
-      <h3>Vous devez vous connecter pour voir le forum</h3> 
-      </article>
-      </center>";
+      include 'vue/erreurLogin.php'; 
+
+
       }
+
     }
 
- if ($_GET['action'] == 'Prods'){
-        session_start();
-        $tblprod = $prod->getArticles();
-    if (!empty($_SESSION["userId"])) {
 
-        require_once "./controleur/membre.php";
-        //require_once "./controleur/controleur.php";
-        
-        $membre = new Membre();
-        $membreResultat = $membre->getMemberById($_SESSION["userId"]);
+  if ($_GET['action'] == 'profil'){
+    if (!empty($_SESSION["userId"]) || !empty($_SESSION['user'])){
+
+      include "./vue/vueProfil.php";
+
+    }
+  }
+ if ($_GET['action'] == 'Prods' || $_GET['action'] == 'page'){
+      $recherche = null;
        
-        if(!empty($membreResultat[0]["login"])) {
-            $afficherNom = ucwords($membreResultat[0]["login"]);
-            
-          include "./vue/vueArticles.php";
-        }
 
+        $tblprod = $prod->getArticles();
+
+    if (!empty($_SESSION["userId"]) || !empty($_SESSION["user"])) {
+
+          include "./vue/vueArticles.php";
         
        
     }else{
       
-      echo "
-      <section>
-      <center>
-      <article class='table_annuaire'> 
-      <h3>Vous devez vous connecter pour voir le Panier</h3> 
-      </article>
-      </center></section>";
+      include 'vue/erreurLogin.php'; 
 
       }
     }
@@ -151,42 +154,24 @@
 
 
 
-      if ($_GET['action'] == 'Util') {
-          include "./vue/vueLogin.php";
-        }
-
         if ($_GET['action'] == 'forum'){
-          session_start();
-      if (!empty($_SESSION["userId"])) {
-
-          require_once "./controleur/membre.php";
-          require_once "./controleur/controleur.php";
-          $comment = new Forum();
-          $membre = new Membre();
-          $membreResultat = $membre->getMemberById($_SESSION["userId"]);
-         
-          if(!empty($membreResultat[0]["login"])) {
-              $afficherNom = ucwords($membreResultat[0]["login"]);
-              $tblcomment = $comment->getcomments();
+     
+      if (!empty($_SESSION["userId"]) || !empty($_SESSION["user"])) {
+        
             include "./vue/vueForum.php";
-          }
-
+          
           
          
       }else{
         
-        echo "
-        <center>
-        <article class='table_annuaire'> 
-        <h3>Vous devez vous connecter pour voir le forum <br> Cliquez ici pour vous <a href='index.php?action=Admin'>connecter</a></h3>
-        </article>
-        </center>";
+        include 'vue/erreurLogin.php'; 
+
         }
       }
 
 
         if ($_GET['action'] == 'Login') {
-          session_start();
+    
           $username = filter_var($_POST["user_name"], FILTER_SANITIZE_STRING);
           $password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
          
@@ -196,28 +181,56 @@
          
           $tblcomment = $comment->getcomments();
           $tblEmp = $employe->getSelect();
-          
+    
+
           $isLoggedIn = $membre->verifLogin($username, $password);
 
-
+          
           if (! $isLoggedIn) {
               $_SESSION["erreurMessage"] = "Les informations d'identification sont invalides !";
               include "vue/vueLogin.php";
-              exit();
+              
+          
           }else{
-       
-          include "vue/vueDashboard.php";
-          exit();
+  
+            include "vue/vueDashboard.php";
           }
+
         }
+
+
+        if ($_GET['action'] == 'Se connecter') {
+    
+          $username = filter_var($_POST["login"], FILTER_SANITIZE_STRING);
+          $password = filter_var($_POST["mdp"], FILTER_SANITIZE_STRING);
+         
+          require_once "controleur/membre.php";
+          require_once  "controleur/controleur.php";
+          $membre = new Membre();
+
+          $isLoggedInUser = $membre->verifUser($username, $password);
+
+
+          
+          if (! $isLoggedInUser) {
+              $_SESSION["erreurMessages"] = "Les informations d'identification sont invalides !";
+              include "vue/vueLogin.php";
+          
+          }else{
+  
+            include "./vue/vue.php";
+
+          }
+
+        }
+          
+        
         if ($_GET['action'] == 'Accueil') {
          // $tblprod = $prod->getArticle();
           include "./vue/vue.php";
         } 
         
         if ( $_GET['action'] == 'Deco') {
-
-        session_start();
 
         session_destroy();
 

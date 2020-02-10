@@ -1,7 +1,4 @@
-<?php
-$page =  (!empty($_GET['page']) ? $_GET['page'] : 0 );
-$page = ($page <= 0 ? 1 :$page);
-?>
+
 <!doctype html>
 <html lang="fr" class="no-js">
 <head>

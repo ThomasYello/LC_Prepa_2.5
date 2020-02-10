@@ -1,3 +1,4 @@
+
 <section id="pageContent">
   <article>
     <br><h1>Votre Panier</h1>
@@ -6,25 +7,38 @@
   <article>
  <form action='index.php?action=commande' method='POST'>
      <?php
-        
-        
-        echo "<tbody>";
-          $tblprod = (empty($tblprod) ? $tblprod=array() : $tblprod);
-          foreach ($tblprod as $produit) {
-    
-            echo 
-            "<tr>" 
-                ."<td><input readonly type='text' name='num_prod' id='ide' value=".$produit['num_prod']."></td>"
-                ."<td>".$produit['img_prod']."</td>"
-                ."<td>".$produit['nom_prod']."</td>"
-                ."<td>".$produit['type'] ."</td>"
-                ."<td>".$produit['prix_prod'] ."€ </td>"
 
-            ."</tr>";
-            echo "</form>";
-          }
-          echo "</tbody>";
+     
+        if (isset($_SESSION["panier"])){
+        
 
+          
+              echo "<tbody>";
+
+            
+                foreach ($_SESSION["panier"] as $produit) {
+     
+                  echo 
+                  "<tr>" 
+                      ."<td>".$produit."</td>"
+                      
+
+                  ."</tr>";
+                  echo "</form>";
+                }
+                echo "</tbody>";
+
+              }else {
+
+
+                echo "<div class='empty'>
+
+                        <h1> Votre panier est actuellement vide ! </h1>
+
+                      </div>";
+
+
+              }
     ?>
 
 </form>

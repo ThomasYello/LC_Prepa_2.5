@@ -1,25 +1,11 @@
 <?php
-if (!empty($_SESSION["userId"])) {
-    require_once "./controleur/membre.php";
-    $membre = new Membre();
-    $membreResultat = $membre->getMemberById($_SESSION["userId"]);
-    if(!empty($membreResultat[0]["login"])) {
-        $afficherNom = ucwords($membreResultat[0]["login"]);
-    } else {
-        $afficherNom = $membreResultat[0]["login"];
-    }
-}
+if (!empty($_SESSION['userId']) ) {
 
 ?>
 <section id="pageContent">
     <article>
-        <br><h1> Annuaire des clients de Lc Prépa !</h1>
-    </article>
-        <br><br>
-       <a class="ad"> Bonjour <strong ><?php echo $afficherNom; ?></strong> !</a>
-       
-        <br><br>
-    </article>
+        <br><h1> Annuaire des utilisateurs de Lc Prépa !</h1>
+   
     <article>
     <table class="table_client">
         <?php
@@ -96,5 +82,12 @@ if (!empty($_SESSION["userId"])) {
 </table>
 </article>
 
-        
+<?php
+
+} else{
+
+  header("Location: ./index.php?action=formLog");
+ 
+ }
+?>
 </section>

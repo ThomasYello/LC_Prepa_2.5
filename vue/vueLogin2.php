@@ -1,11 +1,7 @@
-<?php
-  include "vueHeader.php";
-  include "vueMenu.php";
 
-?>
   <section id="pageContent">
     <article>
-      <br><h1> Espace Utilisateur de l'annuaire </h1>
+      <br><h1> Espace Utilisateur :</h1>
     </article>
     <article>
       <!-- ------------------------------------------- Formulaire Login  ---------------------------------------- -->
@@ -20,12 +16,10 @@
             <td> <input name="password" id="password" type="password" required ></td> 
           </tr>
           <tr>
-            <td colspan='2'> <input type='submit' name='action' value='Login'></td>
+            <td colspan='2'> <input type='submit' name='action' value='Se connecter'></td>
           </tr>
         </table>
       </form>
     </article>
      
   </section>
-
-  <?php include "vueFooter.php"; ?>

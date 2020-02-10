@@ -20,14 +20,18 @@ h2{
 }
 h3{
     font-size: 18px;
+    color: #ccc;
 }
 h4{
     font-size: 16px;
+
 }
+
+
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{
     display:block
 }
-nav ul{
+nav ul {
     list-style:none
 }
 blockquote,q{
@@ -74,16 +78,18 @@ hr{
 }
 
 body {
-	background-image: url("../img/paper.jpg");
+    background-color: rgb(43, 43, 43);
+    
 }
 
 section
 {
-background-color:#E7E8E8;
+background-color:rgb(255, 255, 255);
 }
+
 header {
     background: url(../img/header.jpg);
-    padding: 1em 1.25em;
+    padding: 1em 1.25em 0 1.25em;
     
     max-width: 960px;
     margin: auto;
@@ -96,39 +102,129 @@ header {
 }
 .page a
 {
+border: 1px solid black;
+border-radius: 50%;
+background-color: rgb(117, 116, 116);
 color:black;
-text-decoration:none;
-font-size:130%;
+padding: 6px;
+margin-right: 7px;
+
+}
+
+.page a:hover 
+{
+    color: rgb(218, 218, 218);
+    background-color: rgb(255, 0, 0);
+
+}
+.page
+{
+padding-top: 50px;
+padding-bottom: 20px;
 
 }
 .float{
 
 margin-left: 850px;
-margin-right: 50px;
+margin-right: 10px;
 
 }
 
 nav {
     display: inline-block;
-}
-nav ul li a {
-    background: #EEE;
-    padding: 2px 10px;
-    font-size: 20px;
-    text-decoration: none;
-    font-weight: bold;
-    color: #444;
-    border-radius: 10px;
-}
-nav ul li a:hover {
-	background: #FFF;
-}
-nav ul li {
-    display: inline-block;
-    margin: 10px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: transparent;
+    position: sticky;
+    padding-top: 20px;
+    top: 0;
+
 }
 nav ul {
-    list-style: none;
+
+  list-style-type: none;
+}
+
+nav ul li {
+    float: left;
+    width: 15%;
+    text-align: center;
+    position: relative;
+    padding-right: 5px;
+
+}
+nav ul ::after {
+  content: "";
+  display: table;
+  clear: both;
+ 
+
+}
+
+nav a {
+  width: 100%;
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  color: rgb(255, 248, 248);
+  padding: 5px 0px;
+
+}
+
+nav a:hover{
+
+  color: rgb(163, 35, 30);
+  border-bottom: 3px solid grey;
+
+}
+
+.sous{
+  display: none;
+  box-shadow: 0px 1px 2px rgb(0, 0, 0);
+  background-color: rgb(0, 0, 0);
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+
+}
+
+nav > ul li:hover .sous {
+
+  display: block;
+
+}
+
+.sous li {
+
+  float: none;
+  width: 100%;
+  text-align: left;
+}
+
+.sous a {
+
+  padding: 5px;
+  border-bottom: none;
+
+}
+
+.sous a:hover{
+
+  border-bottom: 2px solid transparent;
+  background-color: rgb(200, 200, 200, 0.1);
+
+}
+
+.deroulant > a::after {
+  display: inline-flex;
+  content: "▼";
+  font-size: 12px;
+  
+}
+
+.deroulant{
+  float: right;
+  right: 50px
 }
 
 #pageContent {
@@ -145,10 +241,10 @@ aside {
 	float: right;
 	width: 30%;
 }
-article {
-    border-bottom: 2px dotted #999;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+.erreur {
+    height: 200px;
+    padding-top: 228px;
+    padding-bottom: 230px;
 }
 article h2 {
     font-weight: normal;
@@ -206,7 +302,7 @@ table tbody tr:nth-child(even){
 
 .table_annuaire{
     display: inline-block;
-    text-align: center;
+    text-align: right;
     width:320px;
 }
 .table_annuaire input[type="text"] {
@@ -244,3 +340,256 @@ h3{
     color: black;
 }
 
+
+
+/*********************************************** Formulaire ***************************************/
+
+.wrapper {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+  }
+
+  
+  
+  .form-wrapper {
+    width: 920px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 40px;
+    
+    
+    
+  }
+
+  /*** form login 2 ***/
+
+
+  .wrapper1 {
+      
+    height: 100vh;
+    width: 920px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+  }
+
+  
+  
+  .form-wrapper1 {
+
+    width: 420px;
+    display: flex;
+    flex-direction: row;
+    padding: 20px 40px;
+    
+    
+    
+  }
+
+  .form-wrapper2 {
+
+    width: 420px;
+    display: flex;
+    flex-direction: row;
+    padding: 20px 40px;
+    
+    
+    
+  }
+
+  .form-wrapper1  h1 {
+
+        position: absolute;
+
+  }
+label {
+    font-size: 0.8em;
+    margin-bottom: 0.25em;
+    color: #222;
+    font-weight: lighter;
+  }
+  
+  input {
+    padding: 10px 10px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #333;
+  }
+  
+  input::placeholder {
+    font-size: 1.2em;
+    font-weight: lighter;
+    color: #999;
+  }
+  
+  
+  .Prenom {
+    margin-left: 1%;
+  }
+  
+  .Nom {
+    margin-right: 1%;
+  }
+  
+  .Prenom,
+  .Nom,
+  .Email
+  {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  .Prenom,
+  .Nom {
+    width: 49%;
+  }
+  
+  .Email
+  {
+    width: 100%;
+  }
+  
+  .bouton {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .bouton input {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(51, 51, 51);
+    width: 30%;
+    margin-top: 1em;
+    padding: 8px 0px;
+    font-size: 1em;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 0.25em;
+  }
+  
+  .bouton input:hover {
+    color: rgb(255, 255, 255);
+  
+    border: 2px solid rgb(99, 99, 99);
+  }
+  
+ 
+
+  .log {
+
+    width: 200px;
+    height: 200px;
+    padding-bottom: 20px;
+  }
+
+
+  li{
+    list-style-type: none;
+ 
+
+  }
+
+  .container {
+
+    width: 800px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+    list-style-type: none;
+  
+  }
+  
+  .bloc{
+    width: 200px;
+    
+   
+  }
+
+  .formproduit {
+
+
+    padding: 10px 50px 50px 10px;
+  }
+
+  #ide {
+
+    width: 0;
+    border: 0px solid;
+  }
+
+  .empty {
+
+
+    padding-top: 225px;
+    padding-bottom: 225px;
+
+    text-align: center;
+  }
+
+.search {
+
+    display: flex;
+    flex-direction: row-reverse;
+
+    width: 100%;
+    
+}
+
+.search input[type="text"] {
+
+    width: 200px;
+}
+
+
+.nav-log {
+
+  color: rgb(218, 214, 214);
+  flex: 1;
+  flex-direction: flex-end;
+}
+
+.formProfil {
+  margin: 0;
+  padding: 20px;
+  width: 300px;
+
+  border: 1px solid black;
+  border-radius: 50px;
+
+  
+}
+
+.formProfil li{
+  text-align: left;
+  padding: 5px;
+}
+
+.container-profil{
+
+  padding: 25%;
+}
+
+.container-profil img {
+
+  width: 150px;
+  height: 150px;
+  max-width: 100%;
+}
+.ar_prof {
+
+  width: 100%;
+  height: 800px;
+  
+ 
+}

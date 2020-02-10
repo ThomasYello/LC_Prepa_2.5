@@ -1,60 +1,110 @@
 <?php
+ 
+ 
 
-$page = (!empty($_GET['page']) ? $_GET['page'] : 1);
+ $prod = $tblprod[0];
 
-$page = ($page <= 0 ? 1 :$page);
+ $pageCourante = $tblprod[1];
+
+ $Nbprod = $tblprod[2];
+
+ $Nbprod = intval($Nbprod);
+
+
+
+
+
 ?>
-
 <section id="pageContent">
 <br><br>
 
-<article>
+<article >
       <!-- ------------------------------------------- Formulaire Recherche  ---------------------------------------- -->
-      <form action='index.php?action=Rechercher' method='POST'>
-        <table class="table_annuaire" >
-          <tr> 
-            <td> <input type='text' name='nom_prod' id='nom_prod'> </td>
-            <td> <input type='text' name='type' id='type' ></td>
-            <td colspan='2'> <input type='submit' name='action' value='Rechercher'></td>
-          </tr>
-        </table>
-      </form>
+      <div class="search">
+        <form action='index.php?action=Rechercher' method='POST'>
+
+              <input type='text' name='nom_prod' id='nom_prod' placeholder="rechercher votre produit...">
+              <input type='submit' name='action' value='Rechercher'>
+          
+        </form>
+        </div>
     </article>
     
-    <article>
-      <center>
-    
-      <table class="table_annuaire">
+    <article >
+      <div class="container">
+          
+      
         <?php
         
         
         echo "<tbody>";
-          $tblprod = (empty($tblprod) ? $tblprod=array() : $tblprod);
-          foreach ($tblprod as $produit) {
-            echo "<form action='index.php?action=+' method='POST'>";
-            echo 
-            "<tr>" 
-                ."<td><input readonly type='text' name='num_prod' id='ide' value=".$produit['num_prod']."></td>"
-                ."<td>".$produit['img_prod']."</td>"
-                ."<td>".$produit['nom_prod']."</td>"
-                ."<td>".$produit['type'] ."</td>"
-                ."<td>".$produit['prix_prod'] ."€ </td>"
-                ."<td><input type='submit' name='action' value='+' /></td>".
-            "</tr>";
+          
+          foreach ($prod as $produit) {
+            
+            
+            echo "<form class='formproduit' action='index.php?action' method='POST'>";
+            echo "<ul class='bloc'>".
+                "<li> 
+                  <center>
+                  <input readonly type='text' name='num_prod' id='ide' value=".$produit['num_prod'].">
+                  <p>".$produit['img_prod']."</p> <br />"
+                  ."<p>".$produit['nom_prod']."</p> <br />"
+                  ."<p>".$produit['prix_prod'] ."€ </p> <br />"
+                  ."<p><input type='submit' name='action' value='Ajouter au panier' /> </p>
+                  </center> 
+                </li>".
+            "</ul>";
             echo "</form>";
+          }
+
+          if (empty($prod)) {
+            echo "<center>";
+           echo "Aucun produit a été trouver a ce nom...";
+           echo "</center>";
           }
         echo "</tbody>";
         ?>
         
-      </table>
+        </div>
       
-        </center>
+
         </article>
        
         <div class="page">
-      <a href="?action=Prods&page=<?php echo $page - 1; ?>">page précédente</a>
-      
-      <a href="?action=Prods&page=<?php echo $page + 1; ?>">page suivante</a>
+        <center>
+        <?php
+       
+        if ($recherche == 1){
+
+
+        }else{
+
+         if($_REQUEST['page'] !== 1) {
+        
+         
+
+          echo '<a href="index.php?action=Prods&page='.($pageCourante-1).'">précèdent </a> ';
+         }
+            for($i=1;$i<=$Nbprod;$i++) {
+              
+              if($i == $pageCourante) {
+                  echo $i.' ';
+              } else {
+                  
+                  echo '<a href="index.php?action=Prods&page='.$i.'">'.$i.' </a> ';
+                 
+              }
+               
+            }
+            if($_REQUEST['page'] !== $Nbprod) {
+
+          echo '<a href="index.php?action=Prods&page='.($pageCourante+1).'">suivant </a> ';
+            }
+
+        }
+        ?>
       <br/><br/>
+
+      </center>
         </div>
         </section>

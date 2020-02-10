@@ -76,5 +76,5 @@ $page = ($page <= 0 ? 1 :$page);
 <div align="center">
 <h1>Partenaire officiel : Evo Corse faite vivre la sportivité</h1><br>
 
-<video src="video/pub.mp4" width="700" autoplay loop ></video>
+<video src="./video/pub.mp4" width="700" controls></video>
 </div>

@@ -22,10 +22,11 @@ class Employes extends DB {
 
   function setAdd($tblemp){
     
-    $strSQL = "INSERT INTO utilisateur (nom, prenom, date_nais, tel, email, mdp) VALUES (?, ?,?, ?, ?, ?)";
+    $strSQL = "INSERT INTO utilisateur (nom, prenom, login, date_nais, tel, email, mdp) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $tabValeur = array(
       $tblemp['nom'],
       $tblemp['prenom'],
+      $tblemp['login'],
       $tblemp['date'],
       $tblemp['tel'],
       $tblemp['mail'],
@@ -84,24 +85,42 @@ class Pagination extends DB {
 Class Produit extends DB {
 
   function Search($tblprod){
+    $limite = 4;
+
+    $SQL="SELECT count('num_prod') FROM `produit`";
+    $tab = array("*");
+
+    $Nb = $this->Requete($SQL, $tab);
+    
+    $Nbprod = $Nb[0];
+    
+    $Nbtotalpage = ceil($Nbprod[0]/$limite);
+    if(isset($_REQUEST['page']) AND !empty($_REQUEST['page']) AND $_REQUEST['page'] > 0 AND $_REQUEST['page'] <= $Nbprod) {
+
+      $_REQUEST['page'] = intval($_REQUEST['page']);
+      $pageCourante = $_REQUEST['page'];
+    
+    } else {
+    
+      $pageCourante = 1;
+    }
    
     
     $strSQL = "SELECT * FROM produit 
                 WHERE nom_prod LIKE  :nom 
-                OR type     LIKE  :type
+                OR type     LIKE  :nom
               ";
 
     empty($tblprod['nom_prod'])  ? $tblprod['nom_prod'] = '*' : $tblprod['nom_prod']; 
-    empty($tblprod['type'])     ? $tblprod['type']    = '*' : $tblprod['type'];
+   
 
     $tabValeur = array(
-          'nom'  => "%".$tblprod['nom_prod']."%", 
-          'type'   => "%".$tblprod['type']."%"
+          'nom'  => "%".$tblprod['nom_prod']."%"
         );
 
     $sch = $this->Requete($strSQL, $tabValeur);
     
-    return $sch;
+    return array($sch, $pageCourante, $Nbtotalpage);
     }
   
   function getArticle() {
@@ -112,25 +131,106 @@ Class Produit extends DB {
 
   function getArticles() {
     
-    $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
+    $limite = 6;
+
+    $SQL="SELECT count('num_prod') FROM `produit`";
+    $tab = array("*");
+
+    $Nb = $this->Requete($SQL, $tab);
     
-    $limite = 4;
+    $Nbprod = $Nb[0];
     
-    $debut = ($page - 1) * $limite;
+    $Nbtotalpage = ceil($Nbprod[0]/$limite);
+    if(isset($_REQUEST['page']) AND !empty($_REQUEST['page']) AND $_REQUEST['page'] > 0 AND $_REQUEST['page'] <= $Nbprod) {
+
+      $_REQUEST['page'] = intval($_REQUEST['page']);
+      $pageCourante = $_REQUEST['page'];
     
-    $strSQL="SELECT * FROM `produit` limit $limite offset $debut";
+    } else {
+    
+      $pageCourante = 1;
+    }
+ 
+ $depart = ($pageCourante-1)*$limite;
+
+    $strSQL="SELECT * FROM `produit`  limit ".$depart.",".$limite;
     $tabValeur = array("*");
-    return $this->Requete($strSQL,$tabValeur);
+    
+    $valeur = $this->Requete($strSQL,$tabValeur);
+
+    return array($valeur,$pageCourante,$Nbtotalpage);
+  
   }
 
+  
   function prodpanier($idprod){
-    $strSQL="SELECT * FROM `produit` where num_prod = :num";
-    $tabValeur = array(
-      'num'  => $idprod['num_prod']
-    );
 
-    return $this->Requete($strSQL,$tabValeur);
+    $strSQL="SELECT * FROM `produit` where num_prod = ".$idprod['num_prod'];
+    $tabValeur = array("*");
+    
+    
+    $prodResultat = $this->Requete($strSQL, $tabValeur);
+    
+        if(!empty($prodResultat)) {
+            $_SESSION["prod"] = array();
+            $_SESSION["prod"] = $prodResultat;
+            
+          var_dump($_SESSION["prod"]);
+          exit;
+
+            return true;
+        }
+    
+  
   }
+
+
+  function panier($prod){
+    $strSQL="SELECT * FROM `produit` where num_prod = ".$prod['num_prod'];
+    $tabValeur = array("*"
+    );
+    
+    
+    $prodResultat = $this->Requete($strSQL, $tabValeur);
+    
+            $_SESSION["panier"] = array();
+            $_SESSION["panier"] ["id"] = array();
+            $_SESSION["panier"] ["nom"] = array();
+            $_SESSION["panier"] ["type"] = array();
+            $_SESSION["panier"] ["prix"] = array();
+            $_SESSION["panier"] ["description"] = array();
+            $_SESSION["panier"] ["image"] = array();
+            
+          if (!empty($_SESSION["panier"] ["id"])){
+
+            array_push($_SESSION["panier"] ["id"], $prodResultat[0]["num_prod"]);
+            array_push($_SESSION["panier"] ["nom"], $prodResultat[0]["nom_prod"]);
+            array_push($_SESSION["panier"] ["type"], $prodResultat[0]["type"]);
+            array_push($_SESSION["panier"] ["prix"], $prodResultat[0]["prix_prod"]);
+            array_push($_SESSION["panier"] ["description"], $prodResultat[0]["desc_prod"]);
+            array_push($_SESSION["panier"] ["image"], $prodResultat[0]["img_prod"]);
+
+          }
+          else{
+
+            $_SESSION["panier"] ["id"] = $prodResultat[0]["num_prod"];
+            $_SESSION["panier"] ["nom"] = $prodResultat[0]["nom_prod"];
+            $_SESSION["panier"] ["type"] = $prodResultat[0]["type"];
+            $_SESSION["panier"] ["description"] = $prodResultat[0]["prix_prod"];
+            $_SESSION["panier"] ["prix"] = $prodResultat[0]["desc_prod"];
+            $_SESSION["panier"] ["image"] = $prodResultat[0]["img_prod"];
+
+
+          }
+           
+
+
+            return true;
+        
+    
+  
+  }
+
 
   function setProd($tblprod){
     
@@ -147,6 +247,8 @@ Class Produit extends DB {
 }
 
 }
+
+   
 
 class Forum extends DB{
 
