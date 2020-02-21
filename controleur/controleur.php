@@ -38,6 +38,23 @@ class Employes extends DB {
 
   function setUpdate($tblemp){
 
+    $strSQL = "UPDATE utilisateur SET prenom = :pnom, nom = :nom, date_nais = :date, tel = :tel WHERE login = :id;";
+
+    $tabValeur = array(
+      'pnom'  => $tblemp['prenom'], 
+      'nom'   => $tblemp['nom'], 
+      'id' => $tblemp['id'],
+      'date' => $tblemp['date'],
+      'tel' => $tblemp['tel']
+    );
+   
+    $update = $this->Requete($strSQL, $tabValeur);
+   
+    return $update;
+  }
+
+  function setUpdateuti($tblemp){
+
     $strSQL = "UPDATE utilisateur SET prenom = :pnom, nom = :nom, date_nais = :date, email = :mail, tel = :tel WHERE num = :ide;";
 
     $tabValeur = array(
@@ -53,8 +70,6 @@ class Employes extends DB {
     
     return $upd;
   }
-
-  
 
    
 }
@@ -192,40 +207,29 @@ Class Produit extends DB {
     
     
     $prodResultat = $this->Requete($strSQL, $tabValeur);
+
     
-            $_SESSION["panier"] = array();
-            $_SESSION["panier"] ["id"] = array();
-            $_SESSION["panier"] ["nom"] = array();
-            $_SESSION["panier"] ["type"] = array();
-            $_SESSION["panier"] ["prix"] = array();
-            $_SESSION["panier"] ["description"] = array();
-            $_SESSION["panier"] ["image"] = array();
-            
-          if (!empty($_SESSION["panier"] ["id"])){
 
-            array_push($_SESSION["panier"] ["id"], $prodResultat[0]["num_prod"]);
-            array_push($_SESSION["panier"] ["nom"], $prodResultat[0]["nom_prod"]);
-            array_push($_SESSION["panier"] ["type"], $prodResultat[0]["type"]);
-            array_push($_SESSION["panier"] ["prix"], $prodResultat[0]["prix_prod"]);
-            array_push($_SESSION["panier"] ["description"], $prodResultat[0]["desc_prod"]);
-            array_push($_SESSION["panier"] ["image"], $prodResultat[0]["img_prod"]);
-
+      $itemArray = array($prodResultat[0]["num_prod"]=>array('nom'=>$prodResultat[0]["nom_prod"], 'type'=>$prodResultat[0]["type"], 'qte'=>$prod["qte"], 'prix'=>$prodResultat[0]["prix_prod"], 'img'=>$prodResultat[0]["img_prod"], 'idprod'=>$prodResultat[0]["idprod"]));
+         
+          if(!empty($_SESSION["panierprod"])) {
+            if(in_array($prodResultat[0]["num_prod"],array_keys($_SESSION["panierprod"]))) {
+              foreach($_SESSION["panierprod"] as $k => $v) {
+                  if($prodResultat[0]["num_prod"] == $k) {
+                    if(empty($_SESSION["panierprod"][$k]["qte"])) {
+                      $_SESSION["panierprod"][$k]["qte"] = 0;
+                    }
+                    $_SESSION["panierprod"][$k]["qte"] += $_POST["qte"];
+                  }
+              }
+            } else {
+              $_SESSION["panierprod"] = array_merge($_SESSION["panierprod"],$itemArray);
+            }
+          } else {
+            $_SESSION["panierprod"] = $itemArray;
           }
-          else{
-
-            $_SESSION["panier"] ["id"] = $prodResultat[0]["num_prod"];
-            $_SESSION["panier"] ["nom"] = $prodResultat[0]["nom_prod"];
-            $_SESSION["panier"] ["type"] = $prodResultat[0]["type"];
-            $_SESSION["panier"] ["description"] = $prodResultat[0]["prix_prod"];
-            $_SESSION["panier"] ["prix"] = $prodResultat[0]["desc_prod"];
-            $_SESSION["panier"] ["image"] = $prodResultat[0]["img_prod"];
-
-
-          }
-           
-
-
-            return true;
+         
+            return $_SESSION["panierprod"];
         
     
   
@@ -256,7 +260,7 @@ class Forum extends DB{
 
     $strSQL = "INSERT INTO forum (pseudo, sujet, comment) VALUES (?, ?,?)";
     $tabValeur = array(
-      $tblcomment['pseudo'],
+      $_SESSION['user'][0][3],
       $tblcomment['sujet'],
       $tblcomment['com']
     );

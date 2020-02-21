@@ -17,24 +17,25 @@ if (!empty($_SESSION['userId']) ) {
     <div id="logo"><img src="./img/logo.png" alt="Logo"></div>
     
 
-    <a href="index.php?action=panier"><div class="float"><img src='./img/panier.jpg' width='50px'></div></a>
+    <div class="caddie"><a href="index.php?action=panier"><img src='./img/cart.png' width='50px'></div></a>
       <!-- ------------------------------------------- Menu ---------------------------------------- -->
     <nav>  
         <ul>
-            <li ><a href="index.php?action=Accueil"> Accueil</a></li>
-            <li><a href="index.php?action=Prods&page"> Produits </a></li>
-            <li><a href="index.php?action=forum"> Forum</a></li>
-
-            <li><a href="index.php?action=Ajouter"> Inscription</a></li>
+            <li ><a href="index.php?action=Accueil"> Accueil</a></li><li><a href="index.php?action=Prods&page"> Produits </a></li><li><a href="index.php?action=forum"> Forum</a></li><li><a href="index.php?action=Ajouter"> Inscription</a></li>
             
                 <?php
                   if (!empty($afficherNom) && !empty($deco)){
                     echo "<li class='deroulant'> <a>Connecté, ".$afficherNom."</a> 
                             <ul class='sous'>";
                             if ($afficherNom === 'Administrateur'){
+
                             echo "<li><a href='index.php?action=formLog'> Administrateur</a></li>";
-                            }
+
+                            }else {
+
                             echo "<li><a href='index.php?action=profil'> Profil </a></li>";
+                            
+                            }
                             echo $deco;
                       
                       echo "</ul></li>";

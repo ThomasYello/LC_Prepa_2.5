@@ -1,16 +1,5 @@
 <?php
 
-if (!empty($_SESSION['userId']) ) {
-
-  $afficherNom = $_SESSION['userId'][0][3];
-
-} else{
-
-  $afficherNom = $_SESSION['user'][0][1];
-
-}
-
-
 
 
 ?>
@@ -18,10 +7,7 @@ if (!empty($_SESSION['userId']) ) {
     <article>
         <br><h1> Forum </h1>
     </article>
-        <br><br>
-       <a float="right" class="ad"> Vous êtes toujours connecté <strong ><?php echo $afficherNom; ?></strong> !</a>
-       
-        <br><br>
+
 
     
 
@@ -44,7 +30,7 @@ if (!empty($_SESSION['userId']) ) {
 
     <table>
     <tr>
-    <th> Pseudo </th>
+    <th> Auteur </th>
     <th> sujet </th>
     <th> Commentaire </th>
     
@@ -59,7 +45,7 @@ if (!empty($_SESSION['userId']) ) {
             echo "<form action='index.php?action=Accueil' method='POST'>";
             echo 
             "<tr>" 
-                ."<td>".$comment['pseudo'] ."</td>"
+                ."<td>".$comment['pseudo']."</td>"
                 ."<td>".$comment['sujet']."</td>"
                 ."<td>".$comment['comment'] ."</td>".
                 
@@ -81,15 +67,11 @@ if (!empty($_SESSION['userId']) ) {
       <h2>commentaire :</h2><br>
       <form action="index.php?action=comment" method="POST">
 
-
-          <label for="nomprod">Pseudo</label><br>
-          <input type="text" name="pseudo" id="pseudo" ><br><br>
-          
           <label for="prenom">sujet</label><br>
           <input type="text" name="sujet" id="sujet" > <br><br>
 
           <label for="commentaire">Commentaire</label><br>
-          <textarea id="com" name="com" rows="5" cols="33">
+          <textarea id="com" name="com" cols="33">
 
           </textarea><br><br>
             

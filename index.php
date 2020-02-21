@@ -25,7 +25,29 @@
           $employe->setdelete(intval($_POST['ide']));
          
         } 
+        
+        if ($_REQUEST['action'] == 'deletep') {
+        if(!empty($_SESSION["panierprod"])) {
 
+              foreach($_SESSION["panierprod"] as $k => $v) {
+
+                if($_REQUEST["idprod"] == $k)
+
+                  unset($_SESSION["panierprod"][$k]);	
+           		
+                if(empty($_SESSION["panierprod"]))
+                  unset($_SESSION["panierprod"]);
+            }
+
+
+            }
+
+
+            include './vue/vuePanier.php';
+          
+          
+        
+      }
         if ($_REQUEST['action'] == 'Ajouter') {
           
           include "./vue/vueInscription.php";
@@ -38,8 +60,17 @@
         } 
 
         if ($_REQUEST['action'] == 'Modifier') {
-          $_POST['ide']=intval($_POST['ide']);
+          if (!empty($_SESSION['user'])){
           $employe->setUpdate($_POST);
+
+          $_SESSION['user'][0][1] = $_POST['nom'];
+          $_SESSION['user'][0][2] = $_POST['prenom'];
+          $_SESSION['user'][0][3] = $_POST['id'];
+          $_SESSION['user'][0][4] = $_POST['date'];
+          $_SESSION['user'][0][5] = $_POST['tel'];
+          }
+
+          include "./vue/vueProfil.php";
         } 
 
         if ($_REQUEST['action'] == 'Rechercher') {
@@ -94,24 +125,17 @@
 
       if ($_GET['action'] == 'comment'){
        
-    if (!empty($_SESSION["userId"])) {
+          if (!empty($_SESSION["userId"]) || !empty($_SESSION["user"])) {
 
         require_once "./controleur/membre.php";
         require_once "./controleur/controleur.php";
         $comment = new Forum();
         $membre = new Membre();
-        $membreResultat = $membre->getMemberById($_SESSION["userId"]);
-       
-        if(!empty($membreResultat[0]["login"])) {
-            $afficherNom = ucwords($membreResultat[0]["login"]);
             $tblcomment = $comment->Commentaire($_POST);
             $tblcomment = $comment->getcomments();
           include "./vue/vueForum.php";
         }
-
-        
-       
-    }else{
+        else{
       
       include 'vue/erreurLogin.php'; 
 
@@ -122,9 +146,17 @@
 
 
   if ($_GET['action'] == 'profil'){
-    if (!empty($_SESSION["userId"]) || !empty($_SESSION['user'])){
+    if (!empty($_SESSION['user'])){
 
       include "./vue/vueProfil.php";
+
+    }
+  }
+
+  if ($_GET['action'] == 'profilm'){
+    if (!empty($_SESSION["userId"])){
+
+      include "./vue/vueProfilm.php";
 
     }
   }
@@ -157,7 +189,8 @@
         if ($_GET['action'] == 'forum'){
      
       if (!empty($_SESSION["userId"]) || !empty($_SESSION["user"])) {
-        
+
+            $tblcomment = $comment->getcomments();
             include "./vue/vueForum.php";
           
           
@@ -169,6 +202,14 @@
         }
       }
 
+        if ($_GET['action'] == 'modifProfil'){
+
+          if(!empty($_SESSION['user'])){
+
+            include "./vue/vueProfilm.php";
+            
+          }
+        }
 
         if ($_GET['action'] == 'Login') {
     
@@ -193,7 +234,7 @@
           
           }else{
   
-            include "vue/vueDashboard.php";
+            header ("Location: index.php?action=Accueil");
           }
 
         }
@@ -218,7 +259,7 @@
           
           }else{
   
-            include "./vue/vue.php";
+            header ("Location: index.php?action=Accueil");
 
           }
 
@@ -235,7 +276,8 @@
         session_destroy();
 
         $tblprod = $prod->getArticle();
-        include "./vue/vue.php";
+        
+        header("Location: index.php?action=Accueil");
 
        }
 
