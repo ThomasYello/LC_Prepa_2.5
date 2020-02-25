@@ -89,9 +89,8 @@ background-color:rgb(255, 255, 255);
 
 header {
     background: url(../img/header.jpg);
-    padding: 1em 1.25em 0 1.25em;
     
-    max-width: 960px;
+    max-width: 1000px;
     margin: auto;
 }
 .container
@@ -124,9 +123,12 @@ padding-bottom: 20px;
 
 }
 .caddie{
+width: 40px;
+padding-right: 2px;
+float: right;
+margin-right: 10px;
+margin-top: 50px;
 
-margin-left: 870px;
-margin-right: 30px;
 border: 1px solid white;
 border-radius: 50%;
 }
@@ -148,10 +150,9 @@ nav ul {
 
 nav ul li {
     float: left;
-    width: 15%;
+    width: 16%;
     text-align: center;
     position: relative;
-    padding-right: 5px;
 
 }
 nav ul ::after {
@@ -584,8 +585,9 @@ label {
 }
 
 .container-profil{
-
-  padding: 25%;
+  width: 25%;
+  padding-top: 150px;
+  margin: auto;
 }
 
 .container-profil img {
@@ -650,4 +652,17 @@ table, th, td {
 
   margin: 10px;
 
+}
+
+
+.content {
+
+  padding: 50px;
+}
+
+.intro {
+
+  text-align: justify;
+  margin: auto;
+  width: 75%;
 }

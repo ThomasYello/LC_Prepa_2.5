@@ -1,53 +1,114 @@
 <style>
-.slider 
-{
-width: 500px;
-height: 300px;
-overflow: hidden;
-margin: 60px auto;
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  box-shadow: 10px 5px 5px black;
+  max-width: 1000px;
+  width: 550px;
+  height: 350px;
+  position: relative;
+  margin: auto;
 }
-.slides 
-{
-width: calc(500px * 3);
-animation: glisse 10s infinite;
+
+.slideimg {
+
+    width: 550px;
+    height: 350px;
+    max-width: 100%;
 }
-.slide 
-{
-float: left;
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
 }
-@keyframes glisse 
-{
-0% {
-transform: translateX(0);
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
 }
-10% {
-transform: translateX(0);
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
 }
-33% {
-transform: translateX(-500px);
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
 }
-43% {
-transform: translateX(-500px);
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
 }
-66% {
-transform: translateX(-1000px);
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
 }
-76% {
-transform: translateX(-1000px);
+
+.active, .dot:hover {
+  background-color: #717171;
 }
-100% {
-	transform: translateX(0);
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
 }
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
 }
 </style>
 
 
-<?php
-$page =  (!empty($_GET['page']) ? $_GET['page'] : 0 );
-$page = ($page <= 0 ? 1 :$page);
-
-
-?>
   <section id="pageContent">
   <article>
     <br><h1>Bienvenue sur le site LC Prépa</h1>
@@ -57,18 +118,86 @@ $page = ($page <= 0 ? 1 :$page);
 
   <div class="content">
    
-     
 
-<div class="slider">
-		<div class="slides">
-			<div class="slide"><img src="./img/1.jpg" alt="" /></div>
-			<div class="slide"><img src="./img/2.jpg" alt="" /></div>
-			<div class="slide"><img src="./img/1.jpg" alt="" /></div>
-		</div>
-	</div>
+<body>
+
+<div class="slideshow-container">
+
+<div class="mySlides fade">
+  <div class="numbertext">1 / 3</div>
+  <img class="slideimg" src="./img/voituretuning.jpg" style="width:100%">
+  <div class="text"></div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">2 / 3</div>
+  <img class="slideimg" src="./img/voituretuning2.jpg" style="width:100%">
+  <div class="text"></div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">3 / 3</div>
+  <img class="slideimg" src="./img/voituretuning3.jpg" style="width:100%">
+  <div class="text"></div>
+</div>
+
+<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+<a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+<br>
+
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+</div>
+
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+</script>
 
     
   </div>
+
+      <article class="intro">
+
+
+        <p>
+        Notre site internet est basée sur le tuning et la préparation de voiture “homologué sur route ” à bas coûts.
+        À la réunion ,le tuning est beaucoup présent mais reste un milieu assez fermé.
+        Notre but est rendre le tuning accessible pour tous le monde avec des prix attractive mais en  respectant l'environnement dû au voiture qui dégage beaucoup de nox ”fumée noir” et limiter la pousse illégal à travers une communauté de passionné.
+
+        </p>
+
+
+
+      </article>
 
 </article>
 <br>

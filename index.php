@@ -29,10 +29,11 @@
         if ($_REQUEST['action'] == 'deletep') {
         if(!empty($_SESSION["panierprod"])) {
 
+          
               foreach($_SESSION["panierprod"] as $k => $v) {
-
-                if($_REQUEST["idprod"] == $k)
-
+                    
+                if($_REQUEST["idprod"] == $_SESSION["panierprod"][$k]['idprod'])
+               
                   unset($_SESSION["panierprod"][$k]);	
            		
                 if(empty($_SESSION["panierprod"]))

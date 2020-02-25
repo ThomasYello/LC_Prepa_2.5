@@ -17,7 +17,7 @@ if (!empty($_SESSION['userId']) ) {
     <div id="logo"><img src="./img/logo.png" alt="Logo"></div>
     
 
-    <div class="caddie"><a href="index.php?action=panier"><img src='./img/cart.png' width='50px'></div></a>
+    <div class="caddie"><a href="index.php?action=panier"><img src='./img/cart.png' width='40px'></div></a>
       <!-- ------------------------------------------- Menu ---------------------------------------- -->
     <nav>  
         <ul>
